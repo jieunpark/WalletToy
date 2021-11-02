@@ -1,31 +1,35 @@
-package com.example.wallettoy
+package com.example.wallettoy.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import com.example.wallettoy.common.Config.ADDRESS
 import com.example.wallettoy.common.Config.ADDRESS2
 import com.example.wallettoy.common.Config.KEY
 import com.example.wallettoy.common.Config.URL_BAOBAB
 import com.klaytn.caver.Caver
 import com.klaytn.caver.transaction.TxPropertyBuilder
-import com.klaytn.caver.transaction.type.ValueTransfer
-import java.io.File
 import java.math.BigInteger
 import androidx.databinding.DataBindingUtil
+import com.example.wallettoy.R
 import com.example.wallettoy.databinding.ActivityMainBinding
+import com.example.wallettoy.presentation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).apply {
+            mainViewModel = this@MainActivity.mainViewModel
+            lifecycleOwner = this@MainActivity
+        }
 
-        sendingKLAY()
     }
 
     private fun sendingKLAY() {
