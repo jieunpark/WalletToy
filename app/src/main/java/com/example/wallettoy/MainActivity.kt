@@ -12,11 +12,18 @@ import com.klaytn.caver.transaction.TxPropertyBuilder
 import com.klaytn.caver.transaction.type.ValueTransfer
 import java.io.File
 import java.math.BigInteger
+import androidx.databinding.DataBindingUtil
+import com.example.wallettoy.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         sendingKLAY()
     }
@@ -42,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         caver.wallet.sign(keyring.address, valueTransfer)
         val rlpEncoded = valueTransfer.rlpEncoding
         Log.w("TEST", ">>>>> RLP ENCODING $rlpEncoded")
+
+
 
     }
 }
